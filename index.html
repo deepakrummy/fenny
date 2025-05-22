@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run EXE from Web</title>
+    <script>
+        function runExe() {
+            fetch('/runExe')  // Calls the backend server to execute the EXE file
+                .then(response => response.text())
+                .then(data => alert(`Result: ${data}`))
+                .catch(error => alert(`Error: ${error}`));
+        }
+    </script>
+</head>
+<body>
+    <h1>Run an EXE File from the Web</h1>
+    <button onclick="runExe()">Run EXE</button>
+</body>
+</html>
